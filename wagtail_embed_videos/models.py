@@ -104,7 +104,7 @@ class AbstractEmbedVideo(models.Model, index.Indexed):
         return reverse('wagtail_embed_videos_video_usage',
                        args=(self.id,))
 
-    search_fields = index.FilterField('uploaded_by_user') + [
+    search_fields =  [
         index.SearchField('title', partial_match=True, boost=10),
         index.RelatedFields('tags', [
         index.SearchField('name', partial_match=True, boost=10),
