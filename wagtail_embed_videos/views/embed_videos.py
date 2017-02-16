@@ -81,7 +81,7 @@ def index(request):
                 'query_string': query_string,
                 'is_searching': bool(query_string),
                 'search_form': form,
-                'popular_tags': EmbedVideo.popular_tags(),
+                # 'popular_tags': EmbedVideo.popular_tags(),
             }
         )
 

@@ -100,7 +100,7 @@ def chooser(request):
             'is_searching': False,
             'can_add': can_add,
             'query_string': q,
-            'popular_tags': EmbedVideo.popular_tags(),
+            # 'popular_tags': EmbedVideo.popular_tags(),
         }
     )
 
