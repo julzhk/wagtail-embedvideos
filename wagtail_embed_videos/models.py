@@ -18,7 +18,7 @@ from django.core.urlresolvers import reverse
 from django.core.files import File
 from django.core.files.temp import NamedTemporaryFile
 
-from wagtail.wagtailadmin.taggable import TagSearchable
+from wagtail.wagtailsearch.index import Indexed
 from wagtail.wagtailadmin.utils import get_object_usage
 from wagtail.wagtailsearch import index
 
@@ -79,7 +79,7 @@ def create_thumbnail(model_instance):
 
 
 @python_2_unicode_compatible
-class AbstractEmbedVideo(models.Model, TagSearchable):
+class AbstractEmbedVideo(models.Model, index.Indexed):
     title = models.CharField(max_length=255, verbose_name=_('Title'))
     url = EmbedVideoField()
     thumbnail = models.ForeignKey(
@@ -104,9 +104,11 @@ class AbstractEmbedVideo(models.Model, TagSearchable):
         return reverse('wagtail_embed_videos_video_usage',
                        args=(self.id,))
 
-    search_fields = TagSearchable.search_fields + [
-        index.FilterField('uploaded_by_user'),
-    ]
+    search_fields = index.FilterField('uploaded_by_user') + [
+        index.SearchField('title', partial_match=True, boost=10),
+        index.RelatedFields('tags', [
+        index.SearchField('name', partial_match=True, boost=10),
+    ]),
 
     def __str__(self):
         return self.title
