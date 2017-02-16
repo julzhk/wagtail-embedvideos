@@ -108,7 +108,7 @@ class AbstractEmbedVideo(models.Model, index.Indexed):
         index.SearchField('title', partial_match=True, boost=10),
         index.RelatedFields('tags', [
         index.SearchField('name', partial_match=True, boost=10),
-    ]]
+    ])]
 
     def __str__(self):
         return self.title
